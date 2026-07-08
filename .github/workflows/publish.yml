@@ -1,0 +1,41 @@
+name: Publish PyPI Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "Enter PyPI username"
+        required: true
+        default: "__token__"
+
+      api_token:
+        description: "Enter PyPI API token"
+        required: true
+        type: password
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install build and twine
+        run: |
+          pip install build twine
+
+      - name: Build package
+        run: |
+          python -m build
+
+      - name: Upload to PyPI
+        run: |
+          python -m twine upload dist/* \
+            -u "${{ github.event.inputs.username }}" \
+            -p "${{ github.event.inputs.api_token }}"
