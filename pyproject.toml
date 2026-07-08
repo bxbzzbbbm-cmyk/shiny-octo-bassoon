@@ -1,0 +1,21 @@
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "whatsapp-pair"
+version = "1.0.0"
+description = "WhatsApp pairing code generator client"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests"
+]
+
+
+[project.scripts]
+whatsapp-pair = "whatsapp_pair.client:main"
